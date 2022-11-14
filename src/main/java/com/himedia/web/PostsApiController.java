@@ -2,13 +2,12 @@ package com.himedia.web;
 
 
 import com.himedia.service.PostsService;
+import com.himedia.web.dto.PostsResponseDto;
 import com.himedia.web.dto.PostsSaveRequestDto;
 import com.himedia.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,8 +21,14 @@ public class PostsApiController {
         return postsService.save(requestDto);
     }
 
-    @Transactional
-    public Long update(Long id, PostsUpdateRequestDto requestDto){
-        return null;
+
+    @PutMapping("/api/v1/posts/{id}")   // 데이터베이스에 쿼리가 없는 이유는 JPA의 영속성 컨텍스트(엔티티를 영구 저장하는 환경)
+    public Long update(@PathVariable Long id, @RequestBody PostsUpdateRequestDto requestDto){
+        return postsService.update(id, requestDto);
     }
+
+    public PostsResponseDto findById(@PathVariable Long id){
+        return postsService.findById(id);
+    }
+
 }

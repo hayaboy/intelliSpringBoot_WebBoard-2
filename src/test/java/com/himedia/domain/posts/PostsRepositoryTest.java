@@ -15,7 +15,7 @@ public class PostsRepositoryTest {
     @Autowired
     PostsRepository postsRepository;
 
-    @Test
+    @Test  // 실행할 경우 H2 자동 실행
     public void BoardSaveLoad(){
         String title="테스트 게시글";
         String content="테스트 본문";
