@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+
 @Getter
 @NoArgsConstructor  // 기본 생성자 자동 추가
 @Entity  //테이블과 링크될 클래스, Entity 클래스에서는 절대 Setter 메소드를 만들지 않습니다. JPA를 사용하면 DB 데이터에 작업할 경우 실제 쿼리 대신 이 Entity 클래스의 수정을 통해 작업
