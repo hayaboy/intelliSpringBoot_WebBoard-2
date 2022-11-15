@@ -6,7 +6,6 @@ import com.himedia.web.dto.PostsResponseDto;
 import com.himedia.web.dto.PostsSaveRequestDto;
 import com.himedia.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -27,7 +26,9 @@ public class PostsApiController {
         return postsService.update(id, requestDto);
     }
 
+    @GetMapping("/api/v1/posts/{id}")
     public PostsResponseDto findById(@PathVariable Long id){
+
         return postsService.findById(id);
     }
 

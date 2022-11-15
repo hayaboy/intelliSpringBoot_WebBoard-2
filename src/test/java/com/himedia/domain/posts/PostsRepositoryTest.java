@@ -4,6 +4,8 @@ import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,6 +16,11 @@ public class PostsRepositoryTest {
 
     @Autowired
     PostsRepository postsRepository;
+
+    @After(value = "")  // Junit에서 단위 테스트에서 끝날 때마다 수행되는 메소드 지정
+    public void cleanup(){
+        postsRepository.deleteAll();
+    }
 
     @Test  // 실행할 경우 H2 자동 실행
     public void BoardSaveLoad(){
@@ -32,9 +39,34 @@ public class PostsRepositoryTest {
 
     }
 
-    @After(value = "")  // Junit에서 단위 테스트에서 끝날 때마다 수행되는 메소드 지정
-    public void cleanup(){
-        postsRepository.deleteAll();
+
+
+    @Test
+    public void BaseTimeEntity_등록(){
+        //given
+        LocalDateTime now = LocalDateTime.of(2022, 11, 15, 11, 24, 0);
+        postsRepository.save(Posts.builder()
+                .title("title")
+                .content("content")
+                .author("author")
+                .build());
+
+        //when
+        List<Posts> postsList = postsRepository.findAll();
+
+
+        //then
+        Posts posts = postsList.get(0);
+
+
+        System.out.println(">>>>>>>>> createDate=" + posts.getCreatedDate() + ", modifiedDate=" + posts.getModifiedDate());
+
+
+        assertThat(posts.getCreatedDate()).isAfter(now);
+        assertThat(posts.getModifiedDate()).isAfter(now);
     }
+
+
+
 
 }
