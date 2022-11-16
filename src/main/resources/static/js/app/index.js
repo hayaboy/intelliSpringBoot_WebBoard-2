@@ -12,7 +12,7 @@ var main={
             _this.delete();
         });
     }, 
-    save : function () {
+    save : function () {  //save
         var data = {
             title: $('#title').val(),
             author: $('#author').val(),
